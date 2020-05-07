@@ -1,9 +1,9 @@
 class Url
   include Mongoid::Document
-  field :originalUrl, type: String
+  field :original_url, type: String
 
-  validates :originalUrl, presence: { message: "Please type in a url" }
-  validates :originalUrl, format: URI::regexp(%w[http https])
+  validates :original_url, presence: { message: "Please type in a url" }
+  validates :original_url, format: URI::regexp(%w[http https])
 
   before_validation :generate_shortener_as_id
 

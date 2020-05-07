@@ -6,20 +6,20 @@ class UrlTest < ActiveSupport::TestCase
   end
 
   test "should not save document when originalUrl field is nil" do
-    new_url = Url.new(originalUrl: nil)
+    new_url = Url.new(original_url: nil)
 
     assert_not new_url.valid?
     assert_not new_url.save
   end
 
   test "should create and save valid url object" do
-    new_url = Url.new(originalUrl: @link)
+    new_url = Url.new(original_url: @link)
 
     assert new_url.save
   end
 
   test "should return _id of 7 characters in length" do
-    new_url = Url.new(originalUrl: @link)
+    new_url = Url.new(original_url: @link)
     new_url.save
 
     assert_equal 7, new_url._id.length
