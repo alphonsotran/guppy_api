@@ -1,11 +1,27 @@
 require 'test_helper'
 
 class UrlTest < ActiveSupport::TestCase
-  test "should return shorten characters of 7 in length" do
-    url = "https://www.google.com"
-    new_url = Url.new(_id: '1234567', originalUrl: url)
-    assert_equal(7, new_url._id.length)
+  setup do
+    @link = "https://www.google.com"
   end
 
+  test "should not save url object when invalidated" do
+    new_url = Url.new(originalUrl: nil)
 
+    assert_not new_url.valid?
+    assert_not new_url.save
+  end
+
+  test "should create and save valid url object" do
+    new_url = Url.new(originalUrl: @link)
+
+    assert new_url.save
+  end
+
+  test "should return _id of 7 characters in length" do
+    new_url = Url.new(originalUrl: @link)
+    new_url.save
+
+    assert_equal 7, new_url._id.length
+  end
 end
