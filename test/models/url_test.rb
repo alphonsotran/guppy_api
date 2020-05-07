@@ -5,7 +5,7 @@ class UrlTest < ActiveSupport::TestCase
     @link = "https://www.google.com"
   end
 
-  test "should not save url object when invalidated" do
+  test "should not save document when originalUrl field is nil" do
     new_url = Url.new(originalUrl: nil)
 
     assert_not new_url.valid?
