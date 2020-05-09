@@ -3,8 +3,14 @@ require_relative '../config/environment'
 require 'rails/test_help'
 
 class ActiveSupport::TestCase
-  parallelize_teardown do |worker|
-    Mongoid::Config.purge!
+  DatabaseCleaner.strategy = :truncation
+
+  setup do |worker|
+    DatabaseCleaner.start
+  end
+
+  teardown do |worker|
+    DatabaseCleaner.clean
   end
 
   # Run tests in parallel with specified workers
