@@ -9,6 +9,11 @@ class Url
 
   before_validation :generate_shortener_as_id
 
+  def short_url
+    # FIXME: Add env
+    "http://localhost:3000/#{self._id}"
+  end
+
   private
   def generate_shortener_as_id(salt = false)
     self._id = generate_hash_from_url(self.original_url, salt)
