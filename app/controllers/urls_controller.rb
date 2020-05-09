@@ -4,9 +4,9 @@ class UrlsController < ApplicationController
     new_url = Url.new(url_params)
 
     if new_url.save
-      json_response(new_url, :created)
+      render json: guppy_url_response(new_url), status: :created
     else
-      json_response({ message: new_url.errors.full_messages }, :unprocessable_entity)
+      render json: ({ message: new_url.errors.full_messages }), status: :unprocessable_entity
     end
   end
 
@@ -22,5 +22,12 @@ class UrlsController < ApplicationController
   private
   def url_params
     params.permit(:original_url, :id)
+  end
+
+  def guppy_url_response(object)
+    object.as_json(
+      only: [:original_url],
+      methods: [:guppy_url],
+    )
   end
 end

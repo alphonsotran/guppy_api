@@ -9,7 +9,9 @@ class UrlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create new url object' do
     post links_path params: { original_url: @link }, headers: { "CONTENT_TYPE" => "text/javascript"}
+    json_response = JSON.parse(response.body)
 
+    assert_match "http://localhost:3000", json_response["guppy_url"]
     assert_response :success
   end
 
