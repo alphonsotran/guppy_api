@@ -8,9 +8,7 @@ class UrlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create new url object' do
-    assert_difference('Url.count') do
-      post links_path params: { original_url: @link }, headers: { "CONTENT_TYPE" => "text/javascript"}
-    end
+    post links_path params: { original_url: @link }, headers: { "CONTENT_TYPE" => "text/javascript"}
 
     assert_response :success
   end
@@ -19,5 +17,21 @@ class UrlsControllerTest < ActionDispatch::IntegrationTest
     post links_path params: { original_url: nil }, headers: { "CONTENT_TYPE" => "text/javascript"}
 
     assert_response :unprocessable_entity
+  end
+
+  test "should redirect when given id exists in the database" do
+    new_url = Url.create(original_url: "https://www.altavista.com")
+
+    get "/#{new_url._id}"
+
+    assert_equal new_url.original_url, "https://www.altavista.com"
+    assert_response :redirect
+    assert_redirected_to new_url.original_url
+  end
+
+  test "should return 404 if link doesn't exist" do
+    get "/abcdef"
+
+    assert_response :not_found
   end
 end
