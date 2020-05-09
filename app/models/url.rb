@@ -1,5 +1,6 @@
 class Url
   include Mongoid::Document
+  include Mongoid::Timestamps
   include Encoder
 
   field :original_url, type: String
