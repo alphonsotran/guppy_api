@@ -9,7 +9,7 @@ class Url
 
   before_validation :generate_shortener_as_id
 
-  def short_url
+  def guppy_url
     # FIXME: Add env
     "http://localhost:3000/#{self._id}"
   end

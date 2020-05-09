@@ -26,7 +26,7 @@ class UrlTest < ActiveSupport::TestCase
 
     assert new_url.save
     # FIXME: Add environment
-    assert_match "http://localhost:3000", new_url.short_url
+    assert_match "http://localhost:3000", new_url.guppy_url
   end
 
   test "should return _id of 7 characters in length" do
