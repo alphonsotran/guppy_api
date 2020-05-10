@@ -12,7 +12,7 @@ class Url
 
   def guppy_url
     # FIXME: Add env
-    "http://localhost:3000/#{self._id}"
+    "http://localhost:5000/#{self._id}"
   end
 
   def generate_short_id(salt = false)
