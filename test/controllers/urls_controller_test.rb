@@ -21,7 +21,7 @@ class UrlsControllerTest < ActionDispatch::IntegrationTest
     assert_response :unprocessable_entity
   end
 
-  test "should redirect when given id exists in the database" do
+  test "should redirect when given id exists in the database or cache" do
     new_url = Url.create(original_url: "https://www.altavista.com")
 
     get "/#{new_url._id}"
