@@ -11,7 +11,7 @@ class UrlsControllerTest < ActionDispatch::IntegrationTest
     post links_path params: { original_url: @link }, headers: { "CONTENT_TYPE" => "text/javascript"}
     json_response = JSON.parse(response.body)
 
-    assert_match "http://localhost:3000", json_response["guppy_url"]
+    assert_match "http://localhost:5000", json_response["guppy_url"]
     assert_response :success
   end
 
