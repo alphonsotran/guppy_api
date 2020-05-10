@@ -20,6 +20,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # NoSQL DB
 gem 'mongoid', '~> 7.0.5'
 
+# Cache store
+gem "redis", "~> 4.1.4"
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
