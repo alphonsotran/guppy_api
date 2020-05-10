@@ -1,24 +1,44 @@
-# README
+# Guppy API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Guppy is a rails api that shortens URL. It exposes two endpoints that allows users to create short version of long links and fetch them.
 
-Things you may want to cover:
+## Requirements
 
-* Ruby version
+- Ruby `2.7.1`
+- Rails `6.0.3`
+- Mongoid `7.0.5`
+  (More info: [mongoid docs](https://docs.mongodb.com/mongoid/current/))
+- Redis `4.1.4`
+  (More info: [redis](https://redis.io/) )
 
-* System dependencies
+### Before starting
 
-* Configuration
+1.  Install Redis
 
-* Database creation
+```
+ brew install redis
+```
 
-* Database initialization
+2.  Install [Mongoid](https://docs.mongodb.com/mongoid/current/) and MongoDB (community edition)
 
-* How to run the test suite
+### Initial setup
 
-* Services (job queues, cache servers, search engines, etc.)
+1. Install ruby dependencies
 
-* Deployment instructions
+   ```
+   bundle install
+   ```
 
-* ...
+2. Start redis in a different tab
+
+   ```
+   redis-server
+   ```
+
+3. Start rails server in another tab
+
+   ```
+   rails s
+   ```
+
+4. Server runs on `http://localhost:5000`.
