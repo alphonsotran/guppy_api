@@ -23,6 +23,9 @@ gem 'mongoid', '~> 7.0.5'
 # Cache store
 gem "redis", "~> 4.1.4"
 
+# Support for CORS
+gem 'rack-cors'
+
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
