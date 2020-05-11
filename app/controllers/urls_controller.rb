@@ -1,16 +1,14 @@
 class UrlsController < ApplicationController
-
   def create
     new_url = Url.new(url_params)
-    new_url_id = new_url.generate_short_id()
-    return render json: guppy_url_response(new_url), status: :ok if cached_url(new_url_id).present?
+    new_url_id = new_url.generate_short_id
+
+    if cached_url(new_url_id).present?
+      return render json: guppy_url_response(new_url), status: :ok
+    end
 
     begin
-      if new_url.save
-        render json: guppy_url_response(new_url), status: :created
-      else
-        render json: ({ message: new_url.errors.full_messages }), status: :unprocessable_entity
-      end
+      insert_to_db(new_url)
     rescue Mongo::Error::OperationFailure => e
       # puts "Rescued: Mongo Operation Failure: #{e.inspect}"
       render json: guppy_url_response(fetch_cache_or_db(new_url_id)), status: :created
@@ -18,13 +16,11 @@ class UrlsController < ApplicationController
   end
 
   def show
-    begin
-      new_url = fetch_cache_or_db(url_params[:id])
-      redirect_to new_url.original_url
-    rescue Mongoid::Errors::DocumentNotFound => e
-      # puts "Rescued: Mongo Document Not Found: #{e.inspect}"
-      render 'errors/404', status: 404
-    end
+    new_url = fetch_cache_or_db(url_params[:id])
+    redirect_to new_url.original_url
+  rescue Mongoid::Errors::DocumentNotFound => e
+    # puts "Rescued: Mongo Document Not Found: #{e.inspect}"
+    render 'errors/404', status: :not_found
   end
 
   private
@@ -33,10 +29,18 @@ class UrlsController < ApplicationController
     params.permit(:original_url, :id)
   end
 
+  def insert_to_db(obj)
+    if obj.save
+      render json: guppy_url_response(obj), status: :created
+    else
+      render json: { message: obj.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def guppy_url_response(object)
     object.as_json(
       only: [:original_url],
-      methods: [:guppy_url],
+      methods: [:guppy_url]
     )
   end
 
@@ -45,7 +49,7 @@ class UrlsController < ApplicationController
   end
 
   def fetch_cache_or_db(current_id)
-    Rails.cache.fetch("#{current_id}", expires_in: 1.week) do
+    Rails.cache.fetch(current_id.to_s, expires_in: 1.week) do
       Url.find(current_id)
     end
   end

@@ -11,7 +11,6 @@ class Url
   before_validation :generate_short_id
 
   def guppy_url
-    # FIXME: Add env
     "http://localhost:5000/#{self._id}"
   end
 
