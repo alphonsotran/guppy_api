@@ -3,7 +3,7 @@ class UrlsController < ApplicationController
     new_url = Url.new(url_params)
     new_url_id = new_url.generate_short_id
 
-    if cached_url(new_url_id).present?
+    if cached_url(new_url._id).present?
       return render json: guppy_url_response(new_url), status: :ok
     end
 
@@ -11,7 +11,7 @@ class UrlsController < ApplicationController
       insert_to_db(new_url)
     rescue Mongo::Error::OperationFailure => e
       # puts "Rescued: Mongo Operation Failure: #{e.inspect}"
-      render json: guppy_url_response(fetch_cache_or_db(new_url_id)), status: :created
+      render json: guppy_url_response(fetch_cache_or_db(new_url._id)), status: :created
     end
   end
 
