@@ -1,7 +1,6 @@
 class UrlsController < ApplicationController
   def create
     new_url = Url.new(url_params)
-    new_url_id = new_url.generate_short_id
 
     if cached_url(new_url._id).present?
       return render json: guppy_url_response(new_url), status: :ok
