@@ -10,6 +10,7 @@ class UrlsController < ApplicationController
       insert_to_db(new_url)
     rescue Mongo::Error::OperationFailure => e
       # puts "Rescued: Mongo Operation Failure: #{e.inspect}"
+
       render json: guppy_url_response(fetch_cache_or_db(new_url._id)), status: :created
     end
   end
